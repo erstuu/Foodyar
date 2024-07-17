@@ -9,7 +9,4 @@ class UserController
     {
         $this->connection = $connection;
     }
-
-
-
 }

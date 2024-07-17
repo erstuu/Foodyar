@@ -1,24 +1,19 @@
 <?php
+
 class Database
 {
     private $host = 'localhost';
-    private $db_name = 'foodyar';
+    private $db_name = 'db_foodyar';
     private $username = 'root';
-    private $password = 'root';
-    private ?\PDO $connection = null;
+    private $password = '';
+    private ?PDO $connection = null;
 
-    public function __construct()
+    public function getConnection(): PDO
     {
-    }
-
-    public function getConnection(): \PDO
-    {
-        if($this->connection === null) {
+        if ($this->connection === null) {
             try {
-                $this->connection = new \PDO("mysql:host=$this->host;dbname=$this->db_name", $this->username, $this->password);
-                $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-            } catch (\PDOException $exception) {
+                $this->connection = new PDO("mysql:host=$this->host;dbname=$this->db_name", $this->username, $this->password);
+            } catch (PDOException $exception) {
                 echo "Connection error: " . $exception->getMessage();
                 throw $exception;
             }
@@ -26,3 +21,24 @@ class Database
         return $this->connection;
     }
 }
+/**
+ *
+ */
+/**
+ * private $host = 'localhost';
+ * private $db_name = 'u341021167_kelasb';
+ * private $username = 'u341021167_kelasb';
+ * private $password = 'Kelasb_123';
+ *
+ * 2230511063_users
+ * 2230511063_dashboard
+ *
+ * private $host = 'localhost';
+ * private $db_name = 'db_foodyar';
+ * private $username = 'root';
+ * private $password = '';
+ * private ?\PDO $connection = null;
+ *
+ * users
+ * dashboard
+ */
