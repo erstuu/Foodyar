@@ -14,12 +14,6 @@ $result = $controller->showAllProduct();
     <script src='https://cdn.tailwindcss.com'></script>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.5.0/tabler-icons.min.css'>
     <link rel="stylesheet" href="public/assets/css/index.css">
-    <style>
-        .custom-underline {
-            text-decoration: underline;
-            text-underline-offset: 7px;
-        }
-    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -78,7 +72,7 @@ $result = $controller->showAllProduct();
     </div>
 
     <div class="flex gap-6 font-normal mb-4">
-        <a href="#Healthy" id="Healthy" class="text-yellow custom-underline">Healthy Food</a>
+        <a href="#Healthy" id="Healthy" class="text-yellow underline underline-offset-4">Healthy Food</a>
         <a href="#Lunch" id="Lunch">Luch</a>
         <a href="#Vege" id="Vege">Vege Desert</a>
         <a href="#Shake" id="Shake">Shake</a>
