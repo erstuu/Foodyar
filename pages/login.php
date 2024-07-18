@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Masuk
             </button>
 
-            <p class='text-center'>Belum punya akun? <span class='cursor-pointer'
+            <p class='text-center'>Belum punya akun? <span class='cursor-pointer underline underline-offset-4 text-blue-700'
                                                            onclick="window.location.href='register.php'">Daftar akun</span>
         </form>
     </div>

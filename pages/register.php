@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Daftar
             </button>
 
-            <p class="text-center">Sudah punya akun? <span class="cursor-pointer"
+            <p class="text-center">Sudah punya akun? <span class="cursor-pointer underline underline-offset-4 text-blue-700"
                                                            onclick="window.location.href='login.php'">Masuk akun</span>
             </p>
         </form>
