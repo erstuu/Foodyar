@@ -94,7 +94,7 @@ $result = $controller->showAllProduct();
 
                 <p class="font-normal"><?= $res->name ?></p>
 
-                <p class="font-light text-slate-400 text-sm">Amir Samantha</p>
+                <p class="font-light text-slate-400 text-sm">Rp <?= $res->price ?></p>
                 <div class="flex gap-2 w-3 h-3 justify-center">
                     <img src="public/assets/Star.png" alt="bintang1">
                     <img src="public/assets/Star.png" alt="bintang2">
