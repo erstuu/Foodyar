@@ -52,7 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="flex gap-3 items-center hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
                 <i class="fa-solid fa-file-import"></i>
-                <a href="upload-csv.php" class="flex gap-2 w-full pr-5">Upload CSV</a>
+                <a href="uploadCsv.php" class="flex gap-2 w-full pr-5">Upload CSV</a>
+            </div>
+            <div class="flex gap-3 items-center hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
+                <i class="fa-solid fa-file-csv"></i>
+                <a href="dataCsv.php" class="flex gap-2 w-full pr-5">CSV Data</a>
             </div>
             <div class="flex gap-3 items-center hover:bg-slate-200 hover:text-slate-900 p-2 rounded-md">
                 <i class="fa-solid fa-gears"></i>

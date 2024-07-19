@@ -60,7 +60,7 @@ if (isset($_FILES['csv']) && $_FILES['csv']['error'] == 0) {
         $csv->website = $data['Website'];
 
         $repository->save($csv);
-        header("Location: data-csv.php");
+        header("Location: dataCsv.php");
     }
 }
 
@@ -105,7 +105,7 @@ if (isset($_FILES['csv']) && $_FILES['csv']['error'] == 0) {
             </div>
             <div class="flex gap-3 items-center hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
                 <i class="fa-solid fa-file-csv"></i>
-                <a href="data-csv.php" class="flex gap-2 w-full pr-5">CSV Data</a>
+                <a href="dataCsv.php" class="flex gap-2 w-full pr-5">CSV Data</a>
             </div>
             <div class="flex gap-3 items-center hover:bg-slate-200 hover:text-slate-900 p-2 rounded-md">
                 <i class="fa-solid fa-gears"></i>

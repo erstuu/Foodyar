@@ -50,7 +50,11 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
             </div>
             <div class="flex gap-3 items-center hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
                 <i class="fa-solid fa-file-import"></i>
-                <a href="upload-csv.php" class="flex gap-2 w-full pr-5">Upload CSV</a>
+                <a href="uploadCsv.php" class="flex gap-2 w-full pr-5">Upload CSV</a>
+            </div>
+            <div class="flex gap-3 items-center hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
+                <i class="fa-solid fa-file-csv"></i>
+                <a href="dataCsv.php" class="flex gap-2 w-full pr-5">CSV Data</a>
             </div>
             <div class="flex gap-3 items-center hover:bg-slate-200 hover:text-slate-900 p-2 rounded-md">
                 <i class="fa-solid fa-gears"></i>
@@ -103,9 +107,12 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                                     <a href="update.php?id=<?= $data->id ?>"
                                        class="bg-green-500 text-white px-2 py-1 rounded-md">Edit</a>
                                     <a href="?action=delete&id=<?= $data->id ?>"
-                                       class="bg-red-500 text-white px-2 py-1 rounded-md">Delete</a>
-                                    <a href="invoice.php?id=<?= $data->id ?>"
-                                       class="bg-blue-500 text-white px-2 py-1 rounded-md">Invoice</a>
+                                       class="bg-red-500 text-white px-2 py-1 rounded-md"
+                                       onclick="return confirmDelete()"
+                                    >Delete
+                                    </a>
+                                    <a href=" invoice.php?id=<?= $data->id ?>"
+                                       class=" bg-blue-500 text-white px-2 py-1 rounded-md">Invoice</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -124,6 +131,10 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
         inputs.forEach(input => {
             input.value = '';
         });
+    }
+
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this item?');
     }
 </script>
 </body>

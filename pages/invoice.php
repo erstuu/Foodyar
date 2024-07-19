@@ -46,9 +46,13 @@ $data = $repository->findById($id);
                 <i class="fa-solid fa-folder-open"></i>
                 <a href="" class="flex gap-2 w-full pr-5">Invoice</a>
             </div>
-            <div class="flex gap-3 items-center hover:bg-slate-200 hover:text-slate-900 p-2 rounded-md">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <a href="" class="flex gap-2 w-full pr-5">Orders</a>
+            <div class="flex gap-3 items-center hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
+                <i class="fa-solid fa-file-import"></i>
+                <a href="uploadCsv.php" class="flex gap-2 w-full pr-5">Upload CSV</a>
+            </div>
+            <div class="flex gap-3 items-center bg-slate-200 hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
+                <i class="fa-solid fa-file-import"></i>
+                <a href="dataCsv.php" class="flex gap-2 w-full pr-5">CSV Data</a>
             </div>
             <div class="flex gap-3 items-center hover:bg-slate-200 hover:text-slate-900 p-2 rounded-md">
                 <i class="fa-solid fa-gears"></i>
