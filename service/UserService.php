@@ -15,11 +15,15 @@ class UserService
         $this->userRepository = $userRepository;
     }
 
-    public function register(UserRegisterRequest $request): UserRegisterResponse {
+    public function register(UserRegisterRequest $request): UserRegisterResponse
+    {
+        $this->validateUserRegistrationRequest($request);
+
         $user = $this->userRepository->findByName($request->name);
         if ($user !== null) {
             throw new Exception('Username already exists.');
         }
+
         $user = new User();
         $user->name = $request->name;
         $user->password = password_hash($request->password, PASSWORD_DEFAULT);
@@ -31,14 +35,34 @@ class UserService
         return $response;
     }
 
-    public function login(UserLoginRequest $request): UserLoginResponse {
+    private function validateUserRegistrationRequest(UserRegisterRequest $request)
+    {
+        if ($request->name == null || $request->password == null ||
+            trim($request->name) == null || trim($request->password) == "") {
+            throw new Exception("name, password cannot blank!");
+        }
+    }
+
+    public function login(UserLoginRequest $request): UserLoginResponse
+    {
+        $this->validateUserLoginRequest($request);
+
         $user = $this->userRepository->findByName($request->name);
         if ($user === null) {
             throw new Exception('Invalid username or password.');
         }
+
         if (!password_verify($request->password, $user->password)) {
             throw new Exception('Invalid username or password.');
         }
         return new UserLoginResponse($user);
+    }
+
+    private function validateUserLoginRequest(UserLoginRequest $request)
+    {
+        if ($request->name == null || $request->password == null ||
+            trim($request->name) == "" || trim($request->password) == "") {
+            throw new Exception("Name, Password can not blank");
+        }
     }
 }

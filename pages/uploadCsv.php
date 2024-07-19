@@ -1,6 +1,40 @@
 <?php
 
-$csv = array();
+require_once __DIR__ . "/../config/Database.php";
+require_once __DIR__ . "/../repository/csvRepository.php";
+require_once __DIR__ . "/../domain/Csv.php";
+
+$db = new Database();
+$connection = $db->getConnection();
+$repository = new csvRepository($connection);
+
+function uploadCsv($file): array
+{
+    $file = fopen($file, "r");
+    $csv = [];
+    $index = 0;
+    while ($data = fgetcsv($file, 1000, ",")) {
+        if (count($data) >= 12) { // Ensure there are at least 12 columns
+            $csv[] = [
+                "Index" => $index,
+                "Customer_Id" => $data[1] ?? '',
+                "First_Name" => $data[2] ?? '',
+                "Last_Name" => $data[3] ?? '',
+                "Company" => $data[4] ?? '',
+                "City" => $data[5] ?? '',
+                "Country" => $data[6] ?? '',
+                "Phone_1" => $data[7] ?? '',
+                "Phone_2" => $data[8] ?? '',
+                "Email" => $data[9] ?? '',
+                "Subscription_Date" => $data[10] ?? '',
+                "Website" => $data[11] ?? '',
+            ];
+            $index++;
+        }
+    }
+    fclose($file);
+    return $csv;
+}
 
 if (isset($_FILES['csv']) && $_FILES['csv']['error'] == 0) {
     $name = $_FILES['csv']['name'];
@@ -8,35 +42,28 @@ if (isset($_FILES['csv']) && $_FILES['csv']['error'] == 0) {
     $type = $_FILES['csv']['type'];
     $tmpName = $_FILES['csv']['tmp_name'];
 
-    if ($ext === 'csv') {
-        if (($handle = fopen($tmpName, 'r')) !== FALSE) {
+    $csv = uploadCsv($tmpName);
 
-            $row = 0;
+    foreach ($csv as $data) {
+        $csv = new Csv();
+        $csv->id = $data['Index'];
+        $csv->customer_id = $data['Customer_Id'];
+        $csv->first_name = $data['First_Name'];
+        $csv->last_name = $data['Last_Name'];
+        $csv->company = $data['Company'];
+        $csv->city = $data['City'];
+        $csv->country = $data['Country'];
+        $csv->phone_1 = $data['Phone_1'];
+        $csv->phone_2 = $data['Phone_2'];
+        $csv->email = $data['Email'];
+        $csv->subscription_date = $data['Subscription_Date'];
+        $csv->website = $data['Website'];
 
-            while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                $col_count = count($data);
-
-                if ($col_count >= 12) {
-                    $csv[$row]['Index'] = $data[0] ?? '';
-                    $csv[$row]['Customer_Id'] = $data[1] ?? '';
-                    $csv[$row]['First_Name'] = $data[2] ?? '';
-                    $csv[$row]['Last_Name'] = $data[3] ?? '';
-                    $csv[$row]['Company'] = $data[4] ?? '';
-                    $csv[$row]['City'] = $data[5] ?? '';
-                    $csv[$row]['Country'] = $data[6] ?? '';
-                    $csv[$row]['Phone_1'] = $data[7] ?? '';
-                    $csv[$row]['Phone_2'] = $data[8] ?? '';
-                    $csv[$row]['Email'] = $data[9] ?? '';
-                    $csv[$row]['Subscription_Date'] = $data[10] ?? '';
-                    $csv[$row]['Website'] = $data[11] ?? '';
-                }
-
-                $row++;
-            }
-            fclose($handle);
-        }
+        $repository->save($csv);
+        header("Location: data-csv.php");
     }
 }
+
 ?>
 
 <!doctype html>
@@ -75,6 +102,10 @@ if (isset($_FILES['csv']) && $_FILES['csv']['error'] == 0) {
             <div class="flex gap-3 items-center bg-slate-200 hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
                 <i class="fa-solid fa-file-import"></i>
                 <a href="" class="flex gap-2 w-full pr-5">Upload CSV</a>
+            </div>
+            <div class="flex gap-3 items-center hover:text-slate-900 hover:bg-slate-100 p-2 rounded-md">
+                <i class="fa-solid fa-file-csv"></i>
+                <a href="data-csv.php" class="flex gap-2 w-full pr-5">CSV Data</a>
             </div>
             <div class="flex gap-3 items-center hover:bg-slate-200 hover:text-slate-900 p-2 rounded-md">
                 <i class="fa-solid fa-gears"></i>
@@ -115,44 +146,6 @@ if (isset($_FILES['csv']) && $_FILES['csv']['error'] == 0) {
                     </div>
                 </div>
             </form>
-            <div class="m-10 relative w-auto overflow-auto">
-                <table class="table-auto caption-bottom text-sm w-auto">
-                    <thead class="border-b">
-                    <tr>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">No</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Customers Id</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">First Name</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Last Name</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Company</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">City</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Country</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Phone 1</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Phone 2</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Email</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Subscription Date</th>
-                        <th class="h-12 px-4 text-left align-middle font-medium pr-0">Website</th>
-                    </tr>
-                    </thead>
-                    <tbody class="border-0">
-                    <?php foreach ($csv as $index => $data): ?>
-                        <tr class="border-b">
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Index"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Customer_Id"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["First_Name"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Last_Name"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Company"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["City"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Country"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Phone_1"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Phone_2"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Email"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Subscription_Date"] ?></td>
-                            <td class="border-b p-4 align-middle pr-0 font-normal"><?= $data["Website"] ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </div>
