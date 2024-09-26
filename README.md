@@ -8,3 +8,4 @@ Users can upload their product which is food that their sell and show it in home
 Users can delete their product<br>
 Users can update their product information<br>
 Users can sign in/out.<br>
+Users can scan their Qr-Code generated when they've bought the product
