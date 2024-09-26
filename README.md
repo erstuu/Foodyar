@@ -1,5 +1,5 @@
 # Introduction
-This is a web app using Php and Javascript as their programming language. Also this is my final project of subject Web Programming in Semester 3 College
+This is a web app using Php and Javascript as their programming language. Also this is my final project of subject Web Programming in Semester 4 College
 In summary, this app is a food selling, where users can buy food, also users can sell their food product.
 
 # Features
